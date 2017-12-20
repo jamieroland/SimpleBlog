@@ -4,6 +4,8 @@ obj
 *.user
 *.sln.docstates
 
+.vs/
+
 [Db]ebug/
 [Rr]elease/
 *.obj

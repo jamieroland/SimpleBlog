@@ -4,19 +4,34 @@
 }
 
 <!DOCTYPE html>
-
+@using System.Web.Optimization;
 <html>
     <head>
         <meta name="viewport" content="width=device-width" />
         <title>@ViewBag.Title - SimpleBlog</title>
+        @Styles.Render("~/styles")
     </head>
     <body>
         <header>
             <h1>
                 <a href="@Url.RouteUrl("home")">Simple Blog</a>
             </h1>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p>Welcome back, @User.Identity.Name</p>
+                <i class="glyphicon glyphicon-bell"></i>
+                <a href="@Url.RouteUrl("logout")">Logout</a>
 
-            <a href="@Url.RouteUrl("login")">Login</a>
+                if (User.IsInRole("admin"))
+                {
+                    <a href="@Url.Action("index", "Posts", new { area = "admin" })">View posts in admin</a>
+                }
+            }
+            else
+            {
+                <a href="@Url.RouteUrl("login")">Login</a>
+            }
+
         </header>
 
         <!-- insert view here!-->
@@ -25,7 +40,7 @@
         <footer>
             &copy; @DateTime.UtcNow.Year - Me
         </footer>
-
+        @Scripts.Render("~/scripts")
         @RenderSection("Scripts", false)
     </body>
 </html>
